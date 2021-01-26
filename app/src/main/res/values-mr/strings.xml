@@ -2236,7 +2236,7 @@
   <string name="BackupUtil_never">कधीही नाही</string>
   <string name="BackupUtil_unknown">अज्ञात</string>
   <string name="preferences_app_protection__see_my_phone_number">माझा फोन नंबर बघा</string>
-  <string name="preferences_app_protection__find_me_by_phone_number">माझ्या फोन नंबरवरून मला शोधा</string>
+  <string name="preferences_app_protection__find_me_by_phone_number">फोन नंबरवरून मला शोधा</string>
   <string name="PhoneNumberPrivacy_everyone">प्रत्येकजण</string>
   <string name="PhoneNumberPrivacy_my_contacts">माझे संपर्क</string>
   <string name="PhoneNumberPrivacy_nobody">कोणीही नाही</string>
@@ -2388,9 +2388,7 @@
   <string name="ChatWallpaperFragment__set_wallpaper">वॉलपेपर सेट करा</string>
   <string name="ChatWallpaperFragment__dark_theme_dims_wallpaper">गडद थीम वॉलपेपर अस्पष्ट बनवतो</string>
   <string name="ChatWallpaperFragment__clear_wallpaper">वॉलपेपर साफ करा</string>
-  <!-- Removed by excludeNonTranslatables <string name="ChatWallpaperFragment__clear_wallpaper_question_mark">वॉलपेपर साफ करायचा?</string> -->
   <string name="ChatWallpaperFragment__reset_all_wallpapers">सर्व वॉलपेपर रीसेट करा</string>
-  <!-- Removed by excludeNonTranslatables <string name="ChatWallpaperFragment__reset_all_wallpapers_question_mark">सर्व वॉलपेपर रीसेट करायचे?</string> -->
   <string name="ChatWallpaperFragment__contact_name">संपर्क नाव</string>
   <string name="ChatWallpaperFragment__reset">रीसेट करा</string>
   <string name="ChatWallpaperFragment__clear">साफ करा</string>
@@ -2412,6 +2410,5 @@
   <string name="WallpaperCropActivity__set_wallpaper_for_all_chats">सर्व चॅटसाठी वॉलपेपर सेट करा.</string>
   <string name="WallpaperCropActivity__set_wallpaper_for_s">%s साठी वॉलपेपर सेट करा.</string>
   <string name="WallpaperCropActivity__error_setting_wallpaper">वॉलपेपर सेट करण्यात त्रुटी.</string>
-  <!-- Removed by excludeNonTranslatables <string name="WallpaperCropActivity__blur">अस्पष्ट</string> -->
   <!--EOF-->
 </resources>
