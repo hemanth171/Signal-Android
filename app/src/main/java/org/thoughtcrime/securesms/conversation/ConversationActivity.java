@@ -26,12 +26,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ShortcutManager;
-import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.net.Uri;
@@ -106,7 +104,6 @@ import org.thoughtcrime.securesms.VerifyIdentityActivity;
 import org.thoughtcrime.securesms.attachments.Attachment;
 import org.thoughtcrime.securesms.attachments.TombstoneAttachment;
 import org.thoughtcrime.securesms.audio.AudioRecorder;
-import org.thoughtcrime.securesms.color.MaterialColor;
 import org.thoughtcrime.securesms.components.AnimatingToggle;
 import org.thoughtcrime.securesms.components.ComposeText;
 import org.thoughtcrime.securesms.components.ConversationSearchBottomBar;
@@ -255,8 +252,8 @@ import org.thoughtcrime.securesms.util.CommunicationActions;
 import org.thoughtcrime.securesms.util.ContextUtil;
 import org.thoughtcrime.securesms.util.ConversationUtil;
 import org.thoughtcrime.securesms.util.DrawableUtil;
-import org.thoughtcrime.securesms.util.DynamicDarkToolbarTheme;
 import org.thoughtcrime.securesms.util.DynamicLanguage;
+import org.thoughtcrime.securesms.util.DynamicNoActionBarTheme;
 import org.thoughtcrime.securesms.util.DynamicTheme;
 import org.thoughtcrime.securesms.util.FeatureFlags;
 import org.thoughtcrime.securesms.util.FullscreenHelper;
@@ -269,7 +266,6 @@ import org.thoughtcrime.securesms.util.SmsUtil;
 import org.thoughtcrime.securesms.util.SpanUtil;
 import org.thoughtcrime.securesms.util.TextSecurePreferences;
 import org.thoughtcrime.securesms.util.TextSecurePreferences.MediaKeyboardMode;
-import org.thoughtcrime.securesms.util.ThemeUtil;
 import org.thoughtcrime.securesms.util.Util;
 import org.thoughtcrime.securesms.util.ViewUtil;
 import org.thoughtcrime.securesms.util.WindowUtil;
@@ -344,26 +340,26 @@ public class ConversationActivity extends PassphraseRequiredActivity
   private static final int SMS_DEFAULT         = 11;
   private static final int MEDIA_SENDER        = 12;
 
-  private   GlideRequests              glideRequests;
-  protected ComposeText                composeText;
-  private   AnimatingToggle            buttonToggle;
-  private   SendButton                 sendButton;
-  private   ImageButton                attachButton;
-  protected ConversationTitleView      titleView;
-  private   TextView                   charactersLeft;
-  private   ConversationFragment       fragment;
-  private   Button                     unblockButton;
-  private   Button                     makeDefaultSmsButton;
-  private   Button                     registerButton;
-  private   InputAwareLayout           container;
-  protected Stub<ReminderView>         reminderView;
-  private   Stub<UnverifiedBannerView> unverifiedBannerView;
-  private   Stub<ReviewBannerView>      reviewBanner;
-  private   TypingStatusTextWatcher     typingTextWatcher;
-  private   ConversationSearchBottomBar searchNav;
-  private   MenuItem                    searchViewItem;
-  private   MessageRequestsBottomView   messageRequestBottomView;
-  private   ConversationReactionOverlay reactionOverlay;
+  private   GlideRequests                glideRequests;
+  protected ComposeText                  composeText;
+  private   AnimatingToggle              buttonToggle;
+  private   SendButton                   sendButton;
+  private   ImageButton                  attachButton;
+  protected ConversationTitleView        titleView;
+  private   TextView                     charactersLeft;
+  private   ConversationFragment         fragment;
+  private   Button                       unblockButton;
+  private   Button                       makeDefaultSmsButton;
+  private   Button                       registerButton;
+  private   InputAwareLayout             container;
+  protected Stub<ReminderView>           reminderView;
+  private   Stub<UnverifiedBannerView>   unverifiedBannerView;
+  private   Stub<ReviewBannerView>       reviewBanner;
+  private   TypingStatusTextWatcher      typingTextWatcher;
+  private   ConversationSearchBottomBar  searchNav;
+  private   MenuItem                     searchViewItem;
+  private   MessageRequestsBottomView    messageRequestBottomView;
+  private   ConversationReactionDelegate reactionDelegate;
 
   private   AttachmentManager        attachmentManager;
   private   AudioRecorder            audioRecorder;
@@ -382,6 +378,7 @@ public class ConversationActivity extends PassphraseRequiredActivity
   private   boolean                  callingTooltipShown;
   private   ImageView                wallpaper;
   private   View                     wallpaperDim;
+  private   Toolbar                  toolbar;
 
   private LinkPreviewViewModel         linkPreviewViewModel;
   private ConversationSearchViewModel  searchViewModel;
@@ -402,7 +399,7 @@ public class ConversationActivity extends PassphraseRequiredActivity
   private boolean       isSecurityInitialized         = false;
 
   private       IdentityRecordList identityRecords = new IdentityRecordList(Collections.emptyList());
-  private final DynamicTheme       dynamicTheme    = new DynamicDarkToolbarTheme();
+  private final DynamicTheme       dynamicTheme    = new DynamicNoActionBarTheme();
   private final DynamicLanguage    dynamicLanguage = new DynamicLanguage();
 
   @Override
@@ -429,7 +426,6 @@ public class ConversationActivity extends PassphraseRequiredActivity
     setContentView(R.layout.conversation_activity);
 
     getWindow().getDecorView().setBackgroundResource(R.color.signal_background_primary);
-    WindowUtil.setLightNavigationBar(getWindow());
 
     fragment = initFragment(R.id.fragment_content, new ConversationFragment(), dynamicLanguage.getCurrentLocale());
 
@@ -530,6 +526,9 @@ public class ConversationActivity extends PassphraseRequiredActivity
     dynamicTheme.onResume(this);
     dynamicLanguage.onResume(this);
 
+    WindowUtil.setLightNavigationBarFromTheme(this);
+    WindowUtil.setLightStatusBarFromTheme(this);
+
     EventBus.getDefault().register(this);
     initializeMmsEnabledCheck();
     initializeIdentityRecords();
@@ -538,7 +537,6 @@ public class ConversationActivity extends PassphraseRequiredActivity
     Recipient recipientSnapshot = recipient.get();
 
     titleView.setTitle(glideRequests, recipientSnapshot);
-    setActionBarColor(recipientSnapshot.getColor());
     setBlockedUserState(recipientSnapshot, isSecureText, isDefaultSms);
     calculateCharactersRemaining();
 
@@ -594,8 +592,8 @@ public class ConversationActivity extends PassphraseRequiredActivity
       container.hideAttachedInput(true);
     }
 
-    if (reactionOverlay != null && reactionOverlay.isShowing()) {
-      reactionOverlay.hide();
+    if (reactionDelegate.isShowing()) {
+     reactionDelegate.hide();
     }
   }
 
@@ -608,7 +606,7 @@ public class ConversationActivity extends PassphraseRequiredActivity
 
   @Override
   public boolean dispatchTouchEvent(MotionEvent ev) {
-    return reactionOverlay.applyTouchEvent(ev) || super.dispatchTouchEvent(ev);
+    return reactionDelegate.applyTouchEvent(ev) || super.dispatchTouchEvent(ev);
   }
 
   @Override
@@ -999,7 +997,7 @@ public class ConversationActivity extends PassphraseRequiredActivity
     case R.id.menu_expiring_messages_off:
     case R.id.menu_expiring_messages:         handleSelectMessageExpiration();                   return true;
     case R.id.menu_create_bubble:             handleCreateBubble();                              return true;
-    case android.R.id.home:                   onNavigateUp();                                    return true;
+    case android.R.id.home:                   super.onBackPressed();                             return true;
     }
 
     return false;
@@ -1030,8 +1028,8 @@ public class ConversationActivity extends PassphraseRequiredActivity
   @Override
   public void onBackPressed() {
     Log.d(TAG, "onBackPressed()");
-    if (reactionOverlay.isShowing()) {
-      reactionOverlay.hide();
+    if (reactionDelegate.isShowing()) {
+      reactionDelegate.hide();
     } else if (container.isInputOpen()) {
       container.hideCurrentInput(composeText);
     } else {
@@ -1404,6 +1402,7 @@ public class ConversationActivity extends PassphraseRequiredActivity
       } else {
         viewModel.getRecentMedia().observe(this, media -> attachmentKeyboardStub.get().onMediaChanged(media));
         attachmentKeyboardStub.get().setCallback(this);
+        attachmentKeyboardStub.get().setWallpaperEnabled(recipient.get().hasWallpaper());
         container.show(composeText, attachmentKeyboardStub.get());
 
         viewModel.onAttachmentKeyboardOpen();
@@ -1919,7 +1918,6 @@ public class ConversationActivity extends PassphraseRequiredActivity
     panelParent              = findViewById(R.id.conversation_activity_panel_parent);
     searchNav                = findViewById(R.id.conversation_search_nav);
     messageRequestBottomView = findViewById(R.id.conversation_activity_message_request_bottom_bar);
-    reactionOverlay          = findViewById(R.id.conversation_reaction_scrubber);
     mentionsSuggestions      = ViewUtil.findStubById(this, R.id.conversation_mention_suggestions_stub);
     wallpaper                = findViewById(R.id.conversation_wallpaper);
     wallpaperDim             = findViewById(R.id.conversation_wallpaper_dim);
@@ -1927,10 +1925,14 @@ public class ConversationActivity extends PassphraseRequiredActivity
     ImageButton quickCameraToggle      = findViewById(R.id.quick_camera_toggle);
     ImageButton inlineAttachmentButton = findViewById(R.id.inline_attachment_button);
 
+    Stub<ConversationReactionOverlay> reactionOverlayStub = ViewUtil.findStubById(this, R.id.conversation_reaction_scrubber_stub);
+    reactionDelegate = new ConversationReactionDelegate(reactionOverlayStub);
+
+
     noLongerMemberBanner   = findViewById(R.id.conversation_no_longer_member_banner);
     requestingMemberBanner = findViewById(R.id.conversation_requesting_banner);
     cancelJoinRequest      = findViewById(R.id.conversation_cancel_request);
-    joinGroupCallButton    = findViewById(R.id.conversation_group_cal_join);
+    joinGroupCallButton    = findViewById(R.id.conversation_group_call_join);
 
     container.addOnKeyboardShownListener(this);
     inputPanel.setListener(this);
@@ -1984,7 +1986,7 @@ public class ConversationActivity extends PassphraseRequiredActivity
 
     inlineAttachmentButton.setOnClickListener(v -> handleAddAttachment());
 
-    reactionOverlay.setOnReactionSelectedListener(this);
+    reactionDelegate.setOnReactionSelectedListener(this);
 
     joinGroupCallButton.setOnClickListener(v -> handleVideo(getRecipient()));
   }
@@ -1994,15 +1996,35 @@ public class ConversationActivity extends PassphraseRequiredActivity
     if (chatWallpaper != null) {
       chatWallpaper.loadInto(wallpaper);
       ChatWallpaperDimLevelUtil.applyDimLevelForNightMode(wallpaperDim, chatWallpaper);
+      inputPanel.setWallpaperEnabled(true);
+      if (attachmentKeyboardStub.resolved()) {
+        attachmentKeyboardStub.get().setWallpaperEnabled(true);
+      }
+
+      int toolbarColor = getResources().getColor(R.color.conversation_toolbar_color_wallpaper);
+      toolbar.setBackgroundColor(toolbarColor);
+      if (Build.VERSION.SDK_INT > 21) {
+        WindowUtil.setStatusBarColor(getWindow(), toolbarColor);
+      }
     } else {
       wallpaper.setImageDrawable(null);
       wallpaperDim.setVisibility(View.GONE);
+      inputPanel.setWallpaperEnabled(false);
+      if (attachmentKeyboardStub.resolved()) {
+        attachmentKeyboardStub.get().setWallpaperEnabled(false);
+      }
+
+      int toolbarColor = getResources().getColor(R.color.conversation_toolbar_color);
+      toolbar.setBackgroundColor(toolbarColor);
+      if (Build.VERSION.SDK_INT > 21) {
+        WindowUtil.setStatusBarColor(getWindow(), toolbarColor);
+      }
     }
     fragment.onWallpaperChanged(chatWallpaper);
   }
 
   protected void initializeActionBar() {
-    Toolbar toolbar = findViewById(R.id.toolbar);
+    toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 
     ActionBar supportActionBar = getSupportActionBar();
@@ -2212,7 +2234,7 @@ public class ConversationActivity extends PassphraseRequiredActivity
   public void onReactionSelected(MessageRecord messageRecord, String emoji) {
     final Context context = getApplicationContext();
 
-    reactionOverlay.hide();
+    reactionDelegate.hide();
 
     SignalExecutors.BOUNDED.execute(() -> {
       ReactionRecord oldRecord = Stream.of(messageRecord.getReactions())
@@ -2238,14 +2260,14 @@ public class ConversationActivity extends PassphraseRequiredActivity
     if (oldRecord != null && hasAddedCustomEmoji) {
       final Context context = getApplicationContext();
 
-      reactionOverlay.hide();
+      reactionDelegate.hide();
 
       SignalExecutors.BOUNDED.execute(() -> MessageSender.sendReactionRemoval(context,
                                                                               messageRecord.getId(),
                                                                               messageRecord.isMms(),
                                                                               oldRecord));
     } else {
-      reactionOverlay.hideAllButMask();
+      reactionDelegate.hideAllButMask();
 
       ReactWithAnyEmojiBottomSheetDialogFragment.createForMessageRecord(messageRecord, reactWithAnyEmojiStartPage)
                                                 .show(getSupportFragmentManager(), "BOTTOM");
@@ -2254,7 +2276,7 @@ public class ConversationActivity extends PassphraseRequiredActivity
 
   @Override
   public void onReactWithAnyEmojiDialogDismissed() {
-    reactionOverlay.hideMask();
+    reactionDelegate.hideMask();
   }
 
   @Override
@@ -2294,7 +2316,6 @@ public class ConversationActivity extends PassphraseRequiredActivity
     titleView.setTitle(glideRequests, recipient);
     titleView.setVerified(identityRecords.isVerified());
     setBlockedUserState(recipient, isSecureText, isDefaultSms);
-    setActionBarColor(recipient.getColor());
     updateReminders();
     updateDefaultSubscriptionId(recipient.getDefaultSubscriptionId());
     initializeSecurity(isSecureText, isDefaultSms);
@@ -2494,18 +2515,6 @@ public class ConversationActivity extends PassphraseRequiredActivity
     }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, thisThreadId);
 
     return future;
-  }
-
-  private void setActionBarColor(MaterialColor color) {
-    ActionBar supportActionBar = getSupportActionBar();
-    if (supportActionBar == null) throw new AssertionError();
-    int actionBarColor = color.toActionBarColor(this);
-    supportActionBar.setBackgroundDrawable(new ColorDrawable(actionBarColor));
-    WindowUtil.setStatusBarColor(getWindow(), color.toStatusBarColor(this));
-
-    joinGroupCallButton.setTextColor(actionBarColor);
-    joinGroupCallButton.setIconTint(ColorStateList.valueOf(actionBarColor));
-    joinGroupCallButton.setRippleColor(ColorStateList.valueOf(actionBarColor));
   }
 
   private void setBlockedUserState(Recipient recipient, boolean isSecureText, boolean isDefaultSms) {
@@ -3128,7 +3137,7 @@ public class ConversationActivity extends PassphraseRequiredActivity
 
   @Override
   public void onReactionsDialogDismissed() {
-    reactionOverlay.hideMask();
+    reactionDelegate.hideMask();
   }
 
   // Listeners
@@ -3359,14 +3368,14 @@ public class ConversationActivity extends PassphraseRequiredActivity
                              @NonNull Toolbar.OnMenuItemClickListener toolbarListener,
                              @NonNull ConversationReactionOverlay.OnHideListener onHideListener)
   {
-    reactionOverlay.setOnToolbarItemClickedListener(toolbarListener);
-    reactionOverlay.setOnHideListener(onHideListener);
-    reactionOverlay.show(this, maskTarget, recipient.get(), messageRecord, inputAreaHeight());
+    reactionDelegate.setOnToolbarItemClickedListener(toolbarListener);
+    reactionDelegate.setOnHideListener(onHideListener);
+    reactionDelegate.show(this, maskTarget, recipient.get(), messageRecord, inputAreaHeight());
   }
 
   @Override
   public void onListVerticalTranslationChanged(float translationY) {
-    reactionOverlay.setListVerticalTranslation(translationY);
+    reactionDelegate.setListVerticalTranslation(translationY);
   }
 
   @Override
@@ -3386,22 +3395,22 @@ public class ConversationActivity extends PassphraseRequiredActivity
 
   @Override
   public void handleReactionDetails(@NonNull View maskTarget) {
-    reactionOverlay.showMask(maskTarget, titleView.getMeasuredHeight(), inputAreaHeight());
+    reactionDelegate.showMask(maskTarget, titleView.getMeasuredHeight(), inputAreaHeight());
   }
 
   @Override
   public void onCursorChanged() {
-    if (!reactionOverlay.isShowing()) {
+    if (!reactionDelegate.isShowing()) {
       return;
     }
 
     SimpleTask.run(() -> {
           //noinspection CodeBlock2Expr
           return DatabaseFactory.getMmsSmsDatabase(this)
-                                .checkMessageExists(reactionOverlay.getMessageRecord());
+                                .checkMessageExists(reactionDelegate.getMessageRecord());
         }, messageExists -> {
           if (!messageExists) {
-            reactionOverlay.hide();
+            reactionDelegate.hide();
           }
         });
   }

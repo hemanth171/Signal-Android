@@ -67,6 +67,8 @@
   <!--AttachmentUploadJob-->
   <string name="AttachmentUploadJob_uploading_media">מעלה מדיה…</string>
   <string name="AttachmentUploadJob_compressing_video_start">דוחס סרטון…</string>
+  <!--BackgroundMessageRetriever-->
+  <string name="BackgroundMessageRetriever_checking_for_messages">בודק אחר הודעות…</string>
   <!--BlockedUsersActivity-->
   <string name="BlockedUsersActivity__blocked_users">משתמשים חסומים</string>
   <string name="BlockedUsersActivity__add_blocked_user">הוסף משתמש חסום</string>
@@ -137,7 +139,7 @@
   <!--ConfirmIdentityDialog-->
   <string name="ConfirmIdentityDialog_your_safety_number_with_s_has_changed">מספר הביטחון שלך עם %1$s השתנה. ייתכן שזה אומר שמישהו מנסה ליירט את התקשורת שלכם או שפשוט %2$s התקין מחדש את Signal.</string>
   <string name="ConfirmIdentityDialog_you_may_wish_to_verify_your_safety_number_with_this_contact">ייתכן שתרצה לוודא את מספר הביטחון שלך עם איש קשר זה.</string>
-  <string name="ConfirmIdentityDialog_accept">קבל</string>
+  <string name="ConfirmIdentityDialog_accept">אשר</string>
   <!--ContactsCursorLoader-->
   <string name="ContactsCursorLoader_recent_chats">התכתבויות אחרונות</string>
   <string name="ContactsCursorLoader_contacts">אנשי קשר</string>
@@ -341,7 +343,7 @@
   <string name="CreateProfileActivity_error_setting_profile_photo">שגיאה בהגדרת תמונת פרופיל</string>
   <string name="CreateProfileActivity_problem_setting_profile">בעיה בהגדרת פרופיל</string>
   <string name="CreateProfileActivity_set_up_your_profile">הגדר את הפרופיל שלך</string>
-  <string name="CreateProfileActivity_signal_profiles_are_end_to_end_encrypted">הפרופיל שלך מוצפן מקצה־אל־קצה. הפרופיל שלך ושינויים שלו יהיו גלויים אל אנשי הקשר שלך, כאשר תיזום או תקבל שיחות חדשות, וכאשר תצטרף אל קבוצות חדשות.</string>
+  <string name="CreateProfileActivity_signal_profiles_are_end_to_end_encrypted">הפרופיל שלך מוצפן מקצה־אל־קצה. הפרופיל שלך ושינויים שלו יהיו גלויים אל אנשי הקשר שלך, כאשר תיזום או תאשר שיחות חדשות, וכאשר תצטרף אל קבוצות חדשות.</string>
   <string name="CreateProfileActivity_set_avatar_description">הגדר יצגן</string>
   <!--ChooseBackupFragment-->
   <string name="ChooseBackupFragment__restore_from_backup">לשחזר מגיבוי?</string>
@@ -462,8 +464,8 @@
     <item quantity="many">%d הזמנות נשלחו</item>
     <item quantity="other">%d הזמנות נשלחו</item>
   </plurals>
-  <string name="GroupManagement_invite_single_user">“%1$s” אינו יכול להתווסף באופן אוטומטי אל קבוצה זו על ידך.\n\nהוא הוזמן להצטרף, ולא יראה הודעות קבוצה כלשהן עד שהוא יסכים.</string>
-  <string name="GroupManagement_invite_multiple_users">משתמשים אלו אינם יכולים להתווסף באופן אוטומטי אל קבוצה זו על ידך.\n\nהם הוזמנו להצטרף אל הקבוצה, ולא יראו הודעות קבוצה כלשהן עד שהם יסכימו.</string>
+  <string name="GroupManagement_invite_single_user">“%1$s” לא יכול/ה להתווסף באופן אוטומטי אל קבוצה זו על ידך.\n\nהוא/יא הוזמן/ה להצטרף, ולא יראה/תראה הודעות קבוצה כלשהן עד שהוא/היא יאשר/תאשר.</string>
+  <string name="GroupManagement_invite_multiple_users">משתמשים אלו אינם יכולים להתווסף באופן אוטומטי אל קבוצה זו על ידך.\n\nהם הוזמנו להצטרף אל הקבוצה, ולא יראו הודעות קבוצה כלשהן עד שהם יאשרו.</string>
   <!--GroupsV1MigrationLearnMoreBottomSheetDialogFragment-->
   <string name="GroupsV1MigrationLearnMore_what_are_new_groups">מהן קבוצות חדשות?</string>
   <string name="GroupsV1MigrationLearnMore_new_groups_have_features_like_mentions">לקבוצות חדשות יש מאפיינים כמו @אזכורים ומנהלני קבוצה, ויתמכו במאפיינים נוספים בעתיד.</string>
@@ -503,7 +505,7 @@
   <!--GroupsV1MigrationInitiationReminder-->
   <string name="GroupsV1MigrationInitiationReminder_to_access_new_features_like_mentions">כדי להשיג גישה אל מאפיינים חדשים כמו @אזכורים ומנהלנים, שדרג קבוצה זו.</string>
   <string name="GroupsV1MigrationInitiationReminder_not_now">לא עכשיו</string>
-  <string name="GroupsV1MigrationInitiationReminder_update_group">עדכון קבוצה</string>
+  <string name="GroupsV1MigrationInitiationReminder_upgrade_group">שדרג קבוצה</string>
   <!--GroupsV1MigrationSuggestionsReminder-->
   <plurals name="GroupsV1MigrationSuggestionsReminder_members_couldnt_be_added_to_the_new_group">
     <item quantity="one">%1$d חבר קבוצה לא היה יכול להתווסף מחדש אל הקבוצה החדשה. האם אתה רוצה להוסיף אותו עכשיו?</item>
@@ -1052,8 +1054,8 @@
     <item quantity="other">%1$d הזמנות אל הקבוצה נשללו.</item>
   </plurals>
   <!--GV2 invitation acceptance-->
-  <string name="MessageRecord_you_accepted_invite">הסכמת אל ההזמנה אל הקבוצה.</string>
-  <string name="MessageRecord_s_accepted_invite">%1$s הסכים אל הזמנה אל הקבוצה.</string>
+  <string name="MessageRecord_you_accepted_invite">אישרת את ההזמנה אל הקבוצה.</string>
+  <string name="MessageRecord_s_accepted_invite">%1$s אישר/ה הזמנה אל הקבוצה.</string>
   <string name="MessageRecord_you_added_invited_member_s">הוספת את חבר הקבוצה המוזמן %1$s.</string>
   <string name="MessageRecord_s_added_invited_member_s">%1$s הוסיף את חבר הקבוצה המוזמן %2$s.</string>
   <!--GV2 title change-->
@@ -1141,19 +1143,19 @@
     <item quantity="other">%1$s, %2$s ועוד %3$d אחרים בשיחה הקבוצתית</item>
   </plurals>
   <!--MessageRequestBottomView-->
-  <string name="MessageRequestBottomView_accept">קבל</string>
+  <string name="MessageRequestBottomView_accept">אשר</string>
   <string name="MessageRequestBottomView_continue">המשך</string>
   <string name="MessageRequestBottomView_delete">מחק</string>
   <string name="MessageRequestBottomView_block">חסום</string>
   <string name="MessageRequestBottomView_unblock">שחרר חסימה</string>
-  <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_they_wont_know_youve_seen_their_messages_until_you_accept">לאפשר אל %1$s לשלוח אליך הודעות? הצד השני לא יידע שראית את ההודעות שלו עד שלא תסכים.</string>
+  <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_they_wont_know_youve_seen_their_messages_until_you_accept">לאפשר אל %1$s לשלוח אליך הודעות? הצד השני לא יידע שראית את ההודעות שלו עד שלא תאשר.</string>
   <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_wont_receive_any_messages_until_you_unblock_them">לאפשר אל %1$s לשלוח אליך הודעות ולשתף את השם והתמונה שלך איתו/איתה? לא תקבל הודעות כלשהן עד שתשחרר חסימה שלו/שלה.</string>
   <string name="MessageRequestBottomView_continue_your_conversation_with_this_group_and_share_your_name_and_photo">להמשיך את השיחה שלך עם קבוצה זו ולשתף את השם והתמונה שלך עם חברי הקבוצה?</string>
   <string name="MessageRequestBottomView_upgrade_this_group_to_activate_new_features">שדרג קבוצה זו כדי להפעיל מאפיינים חדשים כמו @אזכורים ומנהלנים. חברי קבוצה שלא שיתפו את השם או התמונה שלהם בקבוצה זו יוזמנו להצטרף.</string>
   <string name="MessageRequestBottomView_this_legacy_group_can_no_longer_be_used">קבוצה מיושנת זו אינה יכולה עוד להיות בשימוש מאחר שהיא גדולה מדי. גודל הקבוצה המרבי הוא %1$d.</string>
   <string name="MessageRequestBottomView_continue_your_conversation_with_s_and_share_your_name_and_photo">להמשיך את השיחה שלך עם %1$s ולשתף את השם והתמונה שלך איתו/איתה?</string>
   <string name="MessageRequestBottomView_do_you_want_to_join_this_group_they_wont_know_youve_seen_their_messages_until_you_accept">להצטרף אל קבוצה זו ולשתף את השם והתמונה שלך עם חברי הקבוצה? חברי הקבוצה לא יידעו שראית את ההודעה שלהם עד שלא תאשר.</string>
-  <string name="MessageRequestBottomView_join_this_group_they_wont_know_youve_seen_their_messages_until_you_accept">להצטרף אל קבוצה זו? הקבוצה לא תידע שראית את ההודעות שלה עד שלא תסכים.</string>
+  <string name="MessageRequestBottomView_join_this_group_they_wont_know_youve_seen_their_messages_until_you_accept">להצטרף אל קבוצה זו? הקבוצה לא תידע שראית את ההודעות שלה עד שתאשר.</string>
   <string name="MessageRequestBottomView_unblock_this_group_and_share_your_name_and_photo_with_its_members">לשחרר חסימת קבוצה זו ולשתף את השם והתמונה שלך עם חברי הקבוצה? לא תקבל הודעות כלשהן עד שתשחרר חסימה.</string>
   <string name="MessageRequestProfileView_member_of_one_group">חבר קבוצה של %1$s</string>
   <string name="MessageRequestProfileView_member_of_two_groups">חבר קבוצה של %1$s ושל %2$s</string>
@@ -1219,10 +1221,11 @@
   <string name="PassphrasePromptActivity_ok_button_content_description">הגש משפט־סיסמה</string>
   <string name="PassphrasePromptActivity_invalid_passphrase_exclamation">משפט־סיסמה בלתי תקף!</string>
   <string name="PassphrasePromptActivity_unlock_signal">שחרר נעילת Signal</string>
+  <string name="PassphrasePromptActivity_signal_android_lock_screen">Signal Android - מסך נעילה</string>
   <!--PlacePickerActivity-->
   <string name="PlacePickerActivity_title">מפה</string>
   <string name="PlacePickerActivity_drop_pin">זרוק מצביע</string>
-  <string name="PlacePickerActivity_accept_address">קבל כתובת</string>
+  <string name="PlacePickerActivity_accept_address">אשר כתובת</string>
   <!--PlayServicesProblemFragment-->
   <string name="PlayServicesProblemFragment_the_version_of_google_play_services_you_have_installed_is_not_functioning">הגרסה של שירותי Google Play המותקנת אינה מתפקדת כראוי. אנא התקן מחדש את שירותי Google Play ונסה שוב.</string>
   <!--PinRestoreEntryFragment-->
@@ -1321,6 +1324,12 @@
   <string name="CallParticipantView__cant_receive_audio_video_from_s">לא ניתן לקבל שמע ווידאו מן %1$s</string>
   <string name="CallParticipantView__cant_receive_audio_and_video_from_s">לא ניתן לקבל שמע ווידאו מן %1$s</string>
   <string name="CallParticipantView__this_may_be_Because_they_have_not_verified_your_safety_number_change">ייתכן שזה מאחר שהם לא וידאו את שינוי מספר הביטחון שלך, או שיש בעיה עם המכשיר שלהם, או שהם חסמו אותך.</string>
+  <!--ProxyBottomSheetFragment-->
+  <string name="ProxyBottomSheetFragment_proxy_server">שרת יפוי כוח</string>
+  <string name="ProxyBottomSheetFragment_proxy_address">כתובת יפוי כוח</string>
+  <string name="ProxyBottomSheetFragment_do_you_want_to_use_this_proxy_address">האם אתה רוצה להשתמש בכתובת יפוי כוח זו?</string>
+  <string name="ProxyBottomSheetFragment_use_proxy">השתמש ביפוי כוח</string>
+  <string name="ProxyBottomSheetFragment_successfully_connected_to_proxy">התחברת בהצלחה אל יפוי כוח.</string>
   <!--RegistrationActivity-->
   <string name="RegistrationActivity_select_your_country">בחר את מדינתך</string>
   <string name="RegistrationActivity_you_must_specify_your_country_code">אתה חייב לציין את
@@ -1845,7 +1854,7 @@
   <!--EditAboutFragment-->
   <string name="EditAboutFragment_about">אודות</string>
   <string name="EditAboutFragment_write_a_few_words_about_yourself">כתוב כמה מילים על עצמך…</string>
-  <string name="EditAboutFragment_count">%d/%d</string>
+  <string name="EditAboutFragment_count">%1$d/%2$d</string>
   <string name="EditAboutFragment_speak_freely">דבר בחופשיות</string>
   <string name="EditAboutFragment_encrypted">מוצפן</string>
   <string name="EditAboutFragment_be_kind">תהיו אדיבים</string>
@@ -1898,7 +1907,7 @@
   <string name="AndroidManifest__change_passphrase">שנה משפט־סיסמה</string>
   <string name="AndroidManifest__verify_safety_number">וודא מספר ביטחון</string>
   <string name="AndroidManifest__log_submit">הגש יומן ניפוי תקלים</string>
-  <string name="AndroidManifest__media_preview">קדם־תצוגה של מדיה</string>
+  <string name="AndroidManifest__media_preview">תצוגה מקדימה של מדיה</string>
   <string name="AndroidManifest__message_details">פרטי הודעה</string>
   <string name="AndroidManifest__linked_devices">מכשירים מקושרים</string>
   <string name="AndroidManifest__invite_friends">הזמן חברים</string>
@@ -1906,7 +1915,7 @@
   <string name="AndroidManifest_remove_photo">הסר תמונה</string>
   <!--Message Requests Megaphone-->
   <string name="MessageRequestsMegaphone__message_requests">בקשות התכתבות</string>
-  <string name="MessageRequestsMegaphone__users_can_now_choose_to_accept">משתמשים יכולים לבחור כעת לקבל שיחה חדשה. שמות פרופיל מאפשרים לאנשים לדעת עם מי הם מתכתבים.</string>
+  <string name="MessageRequestsMegaphone__users_can_now_choose_to_accept">משתמשים יכולים כעת לבחור לאשר שיחה חדשה. שמות פרופיל מאפשרים לאנשים לדעת עם מי הם מתכתבים.</string>
   <string name="MessageRequestsMegaphone__add_profile_name">הוסף שם פרופיל</string>
   <!--HelpFragment-->
   <string name="HelpFragment__have_you_read_our_faq_yet">האם קראת כבר את השאלות הנפוצות?</string>
@@ -1978,7 +1987,7 @@
   <string name="preferences__generate_link_previews">חולל תצוגות מקדימות של קישורים</string>
   <string name="preferences__retrieve_link_previews_from_websites_for_messages">אחזר תצוגות מקדימות של קישורים ישירות מאתרים עבור הודעות שאתה שולח.</string>
   <string name="preferences__choose_identity">בחר זהות</string>
-  <string name="preferences__choose_your_contact_entry_from_the_contacts_list">בחר את כניסת איש הקשר שלך מתוך רשימת אנשי הקשר.</string>
+  <string name="preferences__choose_your_contact_entry_from_the_contacts_list">בחר את רשומת איש הקשר שלך מתוך רשימת אנשי הקשר.</string>
   <string name="preferences__change_passphrase">שנה משפט־סיסמה</string>
   <string name="preferences__change_your_passphrase">שנה את משפט־הסיסמה שלך</string>
   <string name="preferences__enable_passphrase">אפשר נעילת מסך עם משפט־סיסמה</string>
@@ -2116,6 +2125,22 @@
   <string name="preferences_communication__sealed_sender_allow_from_anyone_description">אפשר שולח אטום עבור הודעות נכנסות מאת אי־אנשי קשר ומאת אנשים איתם לא שיתפת את הפרופיל שלך.</string>
   <string name="preferences_communication__sealed_sender_learn_more">למד עוד</string>
   <string name="preferences_setup_a_username">הגדר שם משתמש</string>
+  <string name="preferences_proxy">יפוי כוח</string>
+  <string name="preferences_use_proxy">השתמש ביפוי כוח</string>
+  <string name="preferences_off">כבוי</string>
+  <string name="preferences_on">מופעל</string>
+  <string name="preferences_proxy_address">כתובת יפוי כוח</string>
+  <string name="preferences_only_use_a_proxy_if">השתמש ביפוי כוח רק אם אתה לא מסוגל להתחבר אל Signal על סלולר או Wi-Fi.</string>
+  <string name="preferences_share">שתף</string>
+  <string name="preferences_save">שמור</string>
+  <string name="preferences_connecting_to_proxy">מתחבר אל יפוי כוח…</string>
+  <string name="preferences_connected_to_proxy">מחובר אל יפוי כוח</string>
+  <string name="preferences_connection_failed">חיבור נכשל</string>
+  <string name="preferences_couldnt_connect_to_the_proxy">לא היה ניתן להתחבר אל יפוי הכוח. בדוק את כתובת יפוי הכוח ונסה שוב.</string>
+  <string name="preferences_you_are_connected_to_the_proxy">אתה מחובר אל יפוי הכוח. אתה יכול לכבות את יפוי הכוח בכל זמן מתוך ההגדרות.</string>
+  <string name="preferences_success">הצלחה</string>
+  <string name="preferences_failed_to_connect">נכשל בהתחברות</string>
+  <string name="preferences_enter_proxy_address">הכנס כתובת יפוי כוח</string>
   <string name="configurable_single_select__customize_option">התאם אישית אפשרות</string>
   <!--Internal only preferences-->
   <!--****************************************-->
@@ -2212,7 +2237,7 @@
   <string name="media_preview__share_title">שתף</string>
   <string name="media_preview__all_media_title">כל המדיה</string>
   <!--media_preview_activity-->
-  <string name="media_preview_activity__media_content_description">קדם־תצוגה של מדיה</string>
+  <string name="media_preview_activity__media_content_description">תצוגה מקדימה של מדיה</string>
   <!--new_conversation_activity-->
   <string name="new_conversation_activity__refresh">רענן</string>
   <!--redphone_audio_popup_menu-->
@@ -2302,6 +2327,8 @@
   <string name="RegistrationLockFragment__incorrect_pin">PIN שגוי</string>
   <string name="RegistrationLockFragment__forgot_your_pin">שכחת את ה־PIN שלך?</string>
   <string name="RegistrationLockFragment__not_many_tries_left">אין הרבה ניסיונות נותרים!</string>
+  <string name="RegistrationLockFragment__signal_registration_need_help_with_pin_for_android_v1_pin">הרשמה אל Signal - עזרה עם PIN עבור Android (v1 PIN)</string>
+  <string name="RegistrationLockFragment__signal_registration_need_help_with_pin_for_android_v2_pin">הרשמה אל Signal - עזרה עם PIN עבור Android (v2 PIN)</string>
   <plurals name="RegistrationLockFragment__for_your_privacy_and_security_there_is_no_way_to_recover">
     <item quantity="one">למען פרטיותך ואבטחתך, אין דרך להשיב את ה־PIN שלך. אם אינך זוכר את ה־PIN שלך, תוכל לוודא מחדש עם מסרון לאחר יום %1$d של אי־פעילות. במקרה זה, חשבונך ינוקה וכל התוכן יימחק.</item>
     <item quantity="two">למען פרטיותך ואבטחתך, אין דרך להשיב את ה־PIN שלך. אם אינך זוכר את ה־PIN שלך, תוכל לוודא מחדש עם מסרון לאחר %1$d ימים של אי־פעילות. במקרה זה, חשבונך ינוקה וכל התוכן יימחק.</item>
@@ -2576,7 +2603,7 @@
   <string name="ChatWallpaperSelectionFragment__choose_from_photos">בחר מתוך תמונות</string>
   <string name="ChatWallpaperSelectionFragment__presets">קדם־הגדרות</string>
   <!--ChatWallpaperPreviewActivity-->
-  <string name="ChatWallpaperPreviewActivity__preview">הצג מראש</string>
+  <string name="ChatWallpaperPreviewActivity__preview">תצוגה מקדימה</string>
   <string name="ChatWallpaperPreviewActivity__set_wallpaper">הגדר טפט</string>
   <string name="ChatWallpaperPreviewActivity__swipe_to_preview_more_wallpapers">החלק כדי להציג מראש עוד טפטים.</string>
   <string name="ChatWallpaperPreviewActivity__set_wallpaper_for_all_chats">טפט הוגדר עבור כל ההתכתבויות</string>

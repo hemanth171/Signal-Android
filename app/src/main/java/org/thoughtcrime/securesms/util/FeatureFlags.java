@@ -2,6 +2,7 @@ package org.thoughtcrime.securesms.util;
 
 import android.os.Build;
 import android.text.TextUtils;
+import android.util.TimeUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
@@ -16,6 +17,7 @@ import org.thoughtcrime.securesms.dependencies.ApplicationDependencies;
 import org.thoughtcrime.securesms.groups.SelectionLimits;
 import org.thoughtcrime.securesms.jobs.RemoteConfigRefreshJob;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
+import org.thoughtcrime.securesms.messageprocessingalarm.MessageProcessReceiver;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -70,10 +72,12 @@ public final class FeatureFlags {
   private static final String AUTOMATIC_SESSION_RESET           = "android.automaticSessionReset.2";
   private static final String AUTOMATIC_SESSION_INTERVAL        = "android.automaticSessionResetInterval";
   private static final String DEFAULT_MAX_BACKOFF               = "android.defaultMaxBackoff";
+  private static final String SERVER_ERROR_MAX_BACKOFF          = "android.serverErrorMaxBackoff";
   private static final String OKHTTP_AUTOMATIC_RETRY            = "android.okhttpAutomaticRetry";
   private static final String SHARE_SELECTION_LIMIT             = "android.share.limit";
   private static final String ANIMATED_STICKER_MIN_MEMORY       = "android.animatedStickerMinMemory";
   private static final String ANIMATED_STICKER_MIN_TOTAL_MEMORY = "android.animatedStickerMinTotalMemory";
+  private static final String MESSAGE_PROCESSOR_ALARM_INTERVAL  = "android.messageProcessor.alarmIntervalMins";
 
   /**
    * We will only store remote values for flags in this set. If you want a flag to be controllable
@@ -101,10 +105,12 @@ public final class FeatureFlags {
       AUTOMATIC_SESSION_RESET,
       AUTOMATIC_SESSION_INTERVAL,
       DEFAULT_MAX_BACKOFF,
+      SERVER_ERROR_MAX_BACKOFF,
       OKHTTP_AUTOMATIC_RETRY,
       SHARE_SELECTION_LIMIT,
       ANIMATED_STICKER_MIN_MEMORY,
-      ANIMATED_STICKER_MIN_TOTAL_MEMORY
+      ANIMATED_STICKER_MIN_TOTAL_MEMORY,
+      MESSAGE_PROCESSOR_ALARM_INTERVAL
   );
 
   @VisibleForTesting
@@ -142,10 +148,12 @@ public final class FeatureFlags {
       AUTOMATIC_SESSION_RESET,
       AUTOMATIC_SESSION_INTERVAL,
       DEFAULT_MAX_BACKOFF,
+      SERVER_ERROR_MAX_BACKOFF,
       OKHTTP_AUTOMATIC_RETRY,
       SHARE_SELECTION_LIMIT,
       ANIMATED_STICKER_MIN_MEMORY,
-      ANIMATED_STICKER_MIN_TOTAL_MEMORY
+      ANIMATED_STICKER_MIN_TOTAL_MEMORY,
+      MESSAGE_PROCESSOR_ALARM_INTERVAL
   );
 
   /**
@@ -168,6 +176,7 @@ public final class FeatureFlags {
    * desired test state.
    */
   private static final Map<String, OnFlagChange> FLAG_CHANGE_LISTENERS = new HashMap<String, OnFlagChange>() {{
+    put(MESSAGE_PROCESSOR_ALARM_INTERVAL, change -> MessageProcessReceiver.startOrUpdateAlarm(ApplicationDependencies.getApplication()));
   }};
 
   private static final Map<String, Object> REMOTE_VALUES = new TreeMap<>();
@@ -321,8 +330,14 @@ public final class FeatureFlags {
     return getInteger(AUTOMATIC_SESSION_RESET, (int) TimeUnit.HOURS.toSeconds(1));
   }
 
-  public static int getDefaultMaxBackoffSeconds() {
-    return getInteger(DEFAULT_MAX_BACKOFF, 60);
+  /** The default maximum backoff for jobs. */
+  public static long getDefaultMaxBackoff() {
+    return TimeUnit.SECONDS.toMillis(getInteger(DEFAULT_MAX_BACKOFF, 60));
+  }
+
+  /** The maximum backoff for network jobs that hit a 5xx error. */
+  public static long getServerErrorMaxBackoff() {
+    return TimeUnit.SECONDS.toMillis(getInteger(SERVER_ERROR_MAX_BACKOFF, (int) TimeUnit.HOURS.toSeconds(6)));
   }
 
   /** Whether or not to allow automatic retries from OkHttp */
@@ -468,6 +483,11 @@ public final class FeatureFlags {
     } else {
       return VersionFlag.ON_IN_FUTURE_VERSION;
     }
+  }
+
+  public static long getBackgroundMessageProcessDelay() {
+    int delayMinutes = getInteger(MESSAGE_PROCESSOR_ALARM_INTERVAL, (int) TimeUnit.HOURS.toMinutes(6));
+    return TimeUnit.MINUTES.toMillis(delayMinutes);
   }
 
   private enum VersionFlag {

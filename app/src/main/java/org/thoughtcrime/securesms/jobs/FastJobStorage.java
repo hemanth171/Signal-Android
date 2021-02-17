@@ -167,9 +167,10 @@ public class FastJobStorage implements JobStorage {
   }
 
   @Override
-  public synchronized int getJobCountForQueue(@NonNull String queueKey) {
+  public synchronized int getJobCountForFactoryAndQueue(@NonNull String factoryKey, @NonNull String queueKey) {
     return (int) Stream.of(jobs)
-                       .filter(j -> queueKey.equals(j.getQueueKey()))
+                       .filter(j -> factoryKey.equals(j.getFactoryKey()) &&
+                                    queueKey.equals(j.getQueueKey()))
                        .count();
   }
 
@@ -192,7 +193,6 @@ public class FastJobStorage implements JobStorage {
                                       existing.getNextRunAttemptTime(),
                                       existing.getRunAttempt(),
                                       existing.getMaxAttempts(),
-                                      existing.getMaxBackoff(),
                                       existing.getLifespan(),
                                       existing.getSerializedData(),
                                       existing.getSerializedInputData(),
@@ -222,7 +222,6 @@ public class FastJobStorage implements JobStorage {
                                       nextRunAttemptTime,
                                       runAttempt,
                                       existing.getMaxAttempts(),
-                                      existing.getMaxBackoff(),
                                       existing.getLifespan(),
                                       serializedData,
                                       existing.getSerializedInputData(),
@@ -248,7 +247,6 @@ public class FastJobStorage implements JobStorage {
                                      existing.getNextRunAttemptTime(),
                                      existing.getRunAttempt(),
                                      existing.getMaxAttempts(),
-                                     existing.getMaxBackoff(),
                                      existing.getLifespan(),
                                      existing.getSerializedData(),
                                      existing.getSerializedInputData(),
